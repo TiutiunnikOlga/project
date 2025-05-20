@@ -8,5 +8,6 @@ def filter_by_state(data: list, state: str = "EXECUTED") -> list:
 # Принимаем словари, на выходе получаем отсортированный по дате список
 
 
-def sort_by_date(data: list, date_key: str = "date", reverse=True) -> list:
-    return sorted(data, key=lambda x: x.get(date_key))
+def sort_by_date(transactions) -> list:
+    return sorted(transactions, key=lambda x: x['date'], reverse=True)
+
