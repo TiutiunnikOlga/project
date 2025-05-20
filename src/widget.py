@@ -25,6 +25,7 @@ def mask_account_card(number_card: str) -> str:
 
 # получаем дату и преобразуем в читаемый формат
 
+
 def get_date(date_input: str) -> str:
     year = date_input[:4]
     month = date_input[5:7]
