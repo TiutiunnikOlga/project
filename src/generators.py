@@ -1,5 +1,6 @@
 from typing import Iterator
 
+
 """Функция генерирует номер карты от заданного числа до заданного числа"""
 
 
@@ -35,12 +36,14 @@ def transaction_descriptions(transactions: list[dict], descriptions: str) -> Ite
             yield "Нет описания операции"
 
 
-'''Функция принимает на вход словари с транзакциями и выдает список отсортированный по валюте'''
+"""Функция принимает на вход словари с транзакциями и выдает список отсортированный по валюте"""
+
+
 def filter_by_currency(transactions: list[dict], currency: str) -> Iterator[dict]:
 
     for transaction in transactions:
         try:
-            '''Проверяем наличие всех необходимых ключей'''
+            """Проверяем наличие всех необходимых ключей"""
             if transaction["operationAmount"]["currency"]["code"] == currency:
                 yield transaction
         except KeyError:
