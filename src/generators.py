@@ -24,16 +24,11 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
 """Функция принимает на вход список транзакций и возвращает значения по наименованию описания"""
 
 
-def transaction_descriptions(transactions: list[dict], descriptions: str) -> Iterator[str]:
-    """Проверяем наличие ключа в каждой транзакции"""
-    for i, transaction in enumerate(transactions):
-        if i >= 5:
-            break
-
-        if descriptions in transaction:
-            yield transaction[descriptions]
-        else:
-            yield "Нет описания операции"
+def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
+    """Получаем из словаря названия операций по ключу"""
+    for transaction in transactions:
+        if "description" in transaction:
+            yield transaction["description"]
 
 
 """Функция принимает на вход словари с транзакциями и выдает список отсортированный по валюте"""

@@ -2,7 +2,7 @@ from src.generators import filter_by_currency, transaction_descriptions, card_nu
 import pytest
 from typing import List, Dict, Any, Iterator
 
-# Исходный список транзакций для тестов
+'''Исходный список транзакций для тестов'''
 transactions = [
     {
         "id": 939719570,
@@ -67,7 +67,7 @@ transactions = [
 ]
 
 
-# Тестовый набор для filter_by_currency
+'''Тестовый набор для filter_by_currency'''
 @pytest.mark.parametrize(
     "transactions, currency, expected",
     [
@@ -77,23 +77,23 @@ transactions = [
     ]
 )
 def test_filter_by_currency(transactions: List[any], currency: str, expected: List[any]):
-    # Получаем результат работы функции
+    '''Получаем результат работы функции'''
     result = list(filter_by_currency(transactions, currency))
 
-    # Проверяем, что результат совпадает с ожидаемым
+    '''Проверяем, что результат совпадает с ожидаемым'''
     assert result == expected
 
 @pytest.fixture
 def transactions():
-    # Создаем фиктивные данные для транзакций
+    '''Создаем фиктивные данные для транзакций'''
     return [
         {'description': 'Перевод организации'},
         {'description': 'Перевод со счета на счет'},
         {'description': 'Перевод со счета на счет'},
         {'description': 'Перевод с карты на карту'},
         {'description': 'Перевод организации'}]
-@pytest.fixture
-def descriptions():
+
+def description():
     return [
         "Перевод организации",
         "Перевод со счета на счет",
@@ -103,25 +103,11 @@ def descriptions():
     ]
 
 
-def test_transaction_descriptions(transactions, descriptions):
-    # Получаем генератор описаний
-    result = transaction_descriptions(transactions, 'description')
+def test_transaction_descriptions(transactions):
+    '''Проверяем работоспособность  теста'''
+    assert list(transaction_descriptions(transactions)) == description()
 
-    # Проверяем каждое описание
-    for i, expected in enumerate(descriptions):
-        try:
-            assert next(result) == expected, f"Ошибка в описании для транзакции {i}"
-        except StopIteration:
-            pytest.fail(f"Недостаточно элементов в генераторе для транзакции {i}")
-
-    # Проверяем, что генератор исчерпан
-    try:
-        next(result)
-        pytest.fail("Генератор должен быть исчерпан")
-    except StopIteration:
-        pass  # Это ожидаемое поведение
-
-# Тестовый набор для card_number_generator
+'''Тестовый набор для card_number_generator'''
 @pytest.mark.parametrize(
     "start, end, expected",
     [
@@ -133,8 +119,8 @@ def test_transaction_descriptions(transactions, descriptions):
     ]
 )
 def test_card_number_generator(start: int, end: int, expected: List[str]):
-    # Получаем результат
+    '''Получаем результат'''
     result = list(card_number_generator(start, end))
 
-    # Проверяем результат
+    '''Проверяем результат'''
     assert result == expected
