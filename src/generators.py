@@ -31,7 +31,6 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
             yield transaction["description"]
 
 
-
 """Функция принимает на вход словари с транзакциями и выдает список отсортированный по валюте"""
 
 

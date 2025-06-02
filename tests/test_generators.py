@@ -2,7 +2,7 @@ from src.generators import filter_by_currency, transaction_descriptions, card_nu
 import pytest
 from typing import List, Dict, Any, Iterator
 
-# Исходный список транзакций для тестов
+'''Исходный список транзакций для тестов'''
 transactions = [
     {
         "id": 939719570,
@@ -67,7 +67,7 @@ transactions = [
 ]
 
 
-# Тестовый набор для filter_by_currency
+'''Тестовый набор для filter_by_currency'''
 @pytest.mark.parametrize(
     "transactions, currency, expected",
     [
@@ -77,10 +77,10 @@ transactions = [
     ]
 )
 def test_filter_by_currency(transactions: List[any], currency: str, expected: List[any]):
-    # Получаем результат работы функции
+    '''Получаем результат работы функции'''
     result = list(filter_by_currency(transactions, currency))
 
-    # Проверяем, что результат совпадает с ожидаемым
+    '''Проверяем, что результат совпадает с ожидаемым'''
     assert result == expected
 
 @pytest.fixture
@@ -107,7 +107,7 @@ def test_transaction_descriptions(transactions):
     '''Проверяем работоспособность  теста'''
     assert list(transaction_descriptions(transactions)) == description()
 
-# Тестовый набор для card_number_generator
+'''Тестовый набор для card_number_generator'''
 @pytest.mark.parametrize(
     "start, end, expected",
     [
@@ -119,8 +119,8 @@ def test_transaction_descriptions(transactions):
     ]
 )
 def test_card_number_generator(start: int, end: int, expected: List[str]):
-    # Получаем результат
+    '''Получаем результат'''
     result = list(card_number_generator(start, end))
 
-    # Проверяем результат
+    '''Проверяем результат'''
     assert result == expected
