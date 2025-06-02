@@ -85,15 +85,15 @@ def test_filter_by_currency(transactions: List[any], currency: str, expected: Li
 
 @pytest.fixture
 def transactions():
-    # Создаем фиктивные данные для транзакций
+    '''Создаем фиктивные данные для транзакций'''
     return [
         {'description': 'Перевод организации'},
         {'description': 'Перевод со счета на счет'},
         {'description': 'Перевод со счета на счет'},
         {'description': 'Перевод с карты на карту'},
         {'description': 'Перевод организации'}]
-@pytest.fixture
-def descriptions():
+
+def description():
     return [
         "Перевод организации",
         "Перевод со счета на счет",
@@ -103,23 +103,9 @@ def descriptions():
     ]
 
 
-def test_transaction_descriptions(transactions, descriptions):
-    # Получаем генератор описаний
-    result = transaction_descriptions(transactions, 'description')
-
-    # Проверяем каждое описание
-    for i, expected in enumerate(descriptions):
-        try:
-            assert next(result) == expected, f"Ошибка в описании для транзакции {i}"
-        except StopIteration:
-            pytest.fail(f"Недостаточно элементов в генераторе для транзакции {i}")
-
-    # Проверяем, что генератор исчерпан
-    try:
-        next(result)
-        pytest.fail("Генератор должен быть исчерпан")
-    except StopIteration:
-        pass  # Это ожидаемое поведение
+def test_transaction_descriptions(transactions):
+    '''Проверяем работоспособность  теста'''
+    assert list(transaction_descriptions(transactions)) == description()
 
 # Тестовый набор для card_number_generator
 @pytest.mark.parametrize(
