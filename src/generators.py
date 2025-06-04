@@ -1,5 +1,5 @@
+import sys  # noqa
 from typing import Iterator
-
 
 """Функция генерирует номер карты от заданного числа до заданного числа"""
 
@@ -17,7 +17,7 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
     for number in range(start, end + 1):
         """Форматируем число в нужный формат"""
         formatted_number = f"{number:016d}"
-        card_number = " ".join(formatted_number[i: i + 4] for i in range(0, 16, 4))
+        card_number = " ".join(formatted_number[i : i + 4] for i in range(0, 16, 4))  # noqa
         yield card_number
 
 
