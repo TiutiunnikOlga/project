@@ -6,14 +6,14 @@ from dotenv import load_dotenv
 
 load_dotenv('.env')
 
-API_KEY = os.getenv('API_KEY')
+apikey = os.getenv('API_KEY')
 
 """Создаем запрос по внешнему API на сайт для получения актуальной информации по курсу валют"""
 
 
 def get_exchange_rate(from_currency: str, to_currency: str, amount: float) -> Optional[float]:
     url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_currency}&from={from_currency}&amount={amount}"
-    headers = {"api_key": "API_KEY"}
+    headers = {"api_key": "apikey"}
     response = requests.request("GET", url, headers=headers)
     if response.status_code == 200:
         try:
