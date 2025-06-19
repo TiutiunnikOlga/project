@@ -4,9 +4,9 @@ from typing import Dict, List, Optional
 import requests
 from dotenv import load_dotenv
 
-load_dotenv('.env')
+load_dotenv(".env")
 
-apikey = os.getenv('API_KEY')
+apikey = os.getenv("API_KEY")
 
 """Создаем запрос по внешнему API на сайт для получения актуальной информации по курсу валют"""
 
@@ -29,17 +29,16 @@ def get_exchange_rate(from_currency: str, to_currency: str, amount: float) -> Op
 def amount_sum(transactions: List[Dict]) -> float:
     total = 0.0
     for transaction in transactions:
-        '''Получаем сумму и валюту'''
+        """Получаем сумму и валюту"""
         amount = float(transaction["operationAmount"]["amount"])
         currency = transaction["operationAmount"]["currency"]["code"]
 
         if currency == "RUB":
             total += float(amount)
         else:
-            '''Получаем курс валюты'''
+            """Получаем курс валюты"""
             response = requests.get(
-                f"https://api.apilayer.com/currency_data/convert?"
-                f"to=RUB&from={currency}&amount={amount}"
+                f"https://api.apilayer.com/currency_data/convert?" f"to=RUB&from={currency}&amount={amount}"
             )
             data = response.json()
             total += data["result"]
