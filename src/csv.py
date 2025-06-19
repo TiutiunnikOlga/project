@@ -2,18 +2,20 @@ import csv
 import logging
 
 import pandas as pd
-from typing import List, Dict
-
-
+from typing import List
 
 
 def load_excel_data(file_path: str) -> pd.DataFrame:
     try:
         """Инициализируем logger"""
-        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+        logging.basicConfig(
+            format="%(asctime)s - %(levelname)s - %(message)s", encoding="utf-8",
+            level=logging.INFO
+        )
 
         """Читаем файл"""
-        logging.info(f"Чтение файла: {file_path}")
+        logging.info("Чтение файла")
+        file_path = "../data/transactions_excel.xlsx"
         df = pd.read_excel(file_path, engine="openpyxl")
 
         """Проверяем данные"""
@@ -56,7 +58,7 @@ logger.addHandler(file_handler)
 """Создаем функцию для чтения файла csv"""
 
 
-def read_transactions()-> List[dict]:
+def read_transactions() -> List[dict]:
     try:
         """Считываем в файл"""
         transaction_list = []
