@@ -1,7 +1,5 @@
 import pytest
-import csv
 from unittest.mock import patch, mock_open
-from pathlib import Path
 
 # Функция для тестирования (предполагается, что она находится в модуле transactions)
 from src.csv import read_transactions
