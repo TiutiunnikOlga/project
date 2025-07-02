@@ -1,5 +1,6 @@
-from src.processing import sort_by_date, filter_by_state
 import pytest
+
+from src.processing import filter_by_state, sort_by_date
 
 
 @pytest.mark.parametrize(
@@ -69,4 +70,4 @@ def test_sort_by_date(maccive, result):
     ],
 )
 def test_filter_by_state(maccive, result_state):
-    assert filter_by_state(maccive) == result_state
+    assert filter_by_state(maccive, state="EXECUTED") == result_state

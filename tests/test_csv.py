@@ -1,8 +1,9 @@
+from unittest.mock import mock_open, patch
+
 import pytest
-from unittest.mock import patch, mock_open
 
 # Функция для тестирования (предполагается, что она находится в модуле transactions)
-from src.csv import read_transactions
+from src.csv_utils import read_transactions
 
 # Создаем тестовые данные
 TEST_CSV_DATA = """id;state;date;amount;currency_name;currency_code;from;to;description
@@ -17,7 +18,7 @@ def test_read_transactions_success():
         transactions = read_transactions()
 
     # Проверяем, что файл открыт правильно
-    mock_file.assert_called_once_with("../data/transactions.csv")
+    mock_file.assert_called_once_with(r"C:\Users\Olga\PycharmProjects\project\data\transactions.csv", encoding="utf-8")
 
     # Проверяем структуру данных
     assert len(transactions) == 2

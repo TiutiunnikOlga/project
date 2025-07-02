@@ -1,5 +1,6 @@
-from src.decorators import log
 import os
+
+from src.decorators import log
 
 
 @log("log.txt")

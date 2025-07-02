@@ -1,29 +1,25 @@
 import csv
 import logging
-
-import pandas as pd
 from typing import List
 
+import pandas as pd
 
-def load_excel_data(file_path: str) -> pd.DataFrame:
+
+def load_excel_data(file_path: str) -> list:
     try:
-        """Инициализируем logger"""
-        logging.basicConfig(
-            format="%(asctime)s - %(levelname)s - %(message)s", encoding="utf-8",
-            level=logging.INFO
-        )
+        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", encoding="utf-8", level=logging.INFO)
 
-        """Читаем файл"""
         logging.info("Чтение файла")
-        file_path = "../data/transactions_excel.xlsx"
         df = pd.read_excel(file_path, engine="openpyxl")
 
-        """Проверяем данные"""
-        logging.info(f"Размер данных: {df.shape}")
-        logging.info("Первые 5 строк:")
-        logging.info(df.head())
+        # Преобразуем DataFrame в список словарей
+        data_list = df.to_dict(orient="records")
 
-        return df
+        logging.info(f"Размер данных: {len(data_list)}")
+        logging.info("Первые 5 записей:")
+        logging.info(data_list[:5])
+
+        return data_list
 
     except FileNotFoundError:
         logging.error("Файл не найден")
@@ -41,15 +37,14 @@ def load_excel_data(file_path: str) -> pd.DataFrame:
 """Пример использования"""
 if __name__ == "__main__":
     try:
-        df = load_excel_data("../data/transactions_exel.xlsx")
-        print(df.shape)
-        print(df.head())
+        df = load_excel_data(r"C:\Users\Olga\PycharmProjects\project\data\transactions_excel.xlsx")
+        print(df)
     except Exception as e:
         print(f"Произошла ошибка: {str(e)}")
 
 logger = logging.getLogger("csv")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("logs/csv.log", mode="w")
+file_handler = logging.FileHandler(r"C:\Users\Olga\PycharmProjects\project\logs\csv.log", mode="w", encoding="utf-8")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -64,7 +59,9 @@ def read_transactions() -> List[dict]:
         transaction_list = []
         logger.info("Читаем файл транзакций: ../data/transactions.csv")
 
-        with open("../data/transactions.csv") as file_transactions:
+        with open(
+            r"C:\Users\Olga\PycharmProjects\project\data\transactions.csv", encoding="utf-8"
+        ) as file_transactions:
             reader = csv.DictReader(file_transactions, delimiter=";")
 
             """Задаем ключевые параметры"""
@@ -89,3 +86,7 @@ def read_transactions() -> List[dict]:
     except Exception as e:
         logger.error(f"Ошибка при чтении файла транзакций: {str(e)}")
         raise
+
+
+if __name__ == "__main__":
+    print(read_transactions)

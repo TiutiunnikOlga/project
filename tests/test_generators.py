@@ -1,6 +1,8 @@
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
-import pytest
 from typing import List
+
+import pytest
+
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 """Исходный список транзакций для тестов"""
 transactions = [
@@ -73,29 +75,37 @@ def test_filter_by_currency(transactions: List[any], currency: str, expected: Li
 
 @pytest.fixture
 def transactions():
-    """Создаем фиктивные данные для транзакций"""
     return [
         {"description": "Перевод организации"},
         {"description": "Перевод со счета на счет"},
         {"description": "Перевод со счета на счет"},
         {"description": "Перевод с карты на карту"},
         {"description": "Перевод организации"},
-    ]
-
-
-def description():
-    return [
-        "Перевод организации",
-        "Перевод со счета на счет",
-        "Перевод со счета на счет",
-        "Перевод с карты на карту",
-        "Перевод организации",
+        {"description": "Оплата товара"},
+        {"description": "Снятие наличных"},
     ]
 
 
 def test_transaction_descriptions(transactions):
-    """Проверяем работоспособность  теста"""
-    assert list(transaction_descriptions(transactions)) == description()
+
+    result = list(transaction_descriptions(transactions, "перевод"))
+    expected = [
+        {"description": "Перевод организации"},
+        {"description": "Перевод со счета на счет"},
+        {"description": "Перевод со счета на счет"},
+        {"description": "Перевод с карты на карту"},
+        {"description": "Перевод организации"},
+    ]
+    assert result == expected
+
+    # Тест с регистронезависимой фильтрацией
+    result = list(transaction_descriptions(transactions, "ПЕРЕВОД"))
+    assert result == expected
+
+    # Тест с частичным совпадением
+    result = list(transaction_descriptions(transactions, "счет"))
+    expected = [{"description": "Перевод со счета на счет"}, {"description": "Перевод со счета на счет"}]
+    assert result == expected
 
 
 """Тестовый набор для card_number_generator"""

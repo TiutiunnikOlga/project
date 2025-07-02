@@ -24,11 +24,12 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
 """Функция принимает на вход список транзакций и возвращает значения по наименованию описания"""
 
 
-def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
+def transaction_descriptions(transactions: list[dict], filter_word: str) -> Iterator[str]:
     """Получаем из словаря названия операций по ключу"""
     for transaction in transactions:
         if "description" in transaction:
-            yield transaction["description"]
+            if filter_word.lower() in transaction["description"].lower():
+                yield transaction
 
 
 """Функция принимает на вход словари с транзакциями и выдает список отсортированный по валюте"""
@@ -39,7 +40,17 @@ def filter_by_currency(transactions: list[dict], currency: str) -> Iterator[dict
     for transaction in transactions:
         try:
             """Проверяем наличие всех необходимых ключей"""
-            if transaction["operationAmount"]["currency"]["code"] == currency:
+            if (
+                "operationAmount" in transaction
+                and "currency" in transaction["operationAmount"]
+                and "code" in transaction["operationAmount"]["currency"]
+                and transaction["operationAmount"]["currency"]["code"] == currency
+            ):
                 yield transaction
+
         except KeyError:
             raise ValueError("Транзакция не содержит ключ 'currency'")
+
+
+if __name__ == "__main__":
+    transaction_descriptions()
